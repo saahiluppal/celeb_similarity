@@ -86,6 +86,7 @@ def similarity(image_path):
         img = Image.open(image_path)
         fig.add_subplot(rows, columns, i)
         plt.imshow(img)
+    plt.savefig("results.png")
     plt.show()
 
     
