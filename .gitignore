@@ -137,3 +137,9 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Custom
+WriteUp.txt
+*.zip
+*.pt
+img_align_celeba/

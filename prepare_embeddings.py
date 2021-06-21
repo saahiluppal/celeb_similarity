@@ -10,6 +10,8 @@ import io
 import models
 import torchvision as tv
 import numpy as np
+import shutil
+import zipfile
 
 CROP = (178, 218)
 MODEL = "BiT-M-R50x1"
@@ -70,7 +72,18 @@ def prepare_embeddings():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Device:", device)
 
-    # TODO: If folder is not there, download
+    if not os.path.exists("img_align_celeba"):
+        print("=> Downloading Dataset...")
+        url = "https://github.com/saahiluppal/similar/releases/download/v1.0/img_align_celeba.zip"
+        response = requests.get(url, stream=True)
+        with open("img_align_celeba.zip", "wb") as out_file:
+            shutil.copyfileobj(response.raw, out_file)
+        del response
+
+        print("=> Extracting Dataset...")
+        with zipfile.ZipFile("img_align_celeba.zip", "r") as zip_ref:
+            zip_ref.extractall()
+
     dataset = CelebA("img_align_celeba", transform=transform)
 
     model = Model(load_weights=True)
